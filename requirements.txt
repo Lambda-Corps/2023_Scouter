@@ -1,0 +1,7 @@
+django
+django-bootstrap-v5
+django-crispy-forms
+crispy-bootstrap5
+django-tables2
+urllib3
+certifi
