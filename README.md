@@ -10,3 +10,11 @@ Requires installing the latest release of Django, Python3, and their relevant de
 1. Activate your virtual environment -- source ./venv/bin/activate
 1. Install the scouting app dependencies -- pip install -r requirements.txt
 1. Get to work!
+
+
+# Configuring your local environment once you have the code checked out
+
+1. Create the database migrationss, this sets up the database structure -- python3 manage.py makemigrations
+1. Apply the new database schema -- python3 manage.py migrate
+1. Create the database admin user -- python manage.py createsuperuser
+1. Enter the admin username, give some email address, and type the password
