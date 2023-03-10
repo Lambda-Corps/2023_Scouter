@@ -45,7 +45,7 @@ class Robot(models.Model):
     charge_station = models.CharField(choices=end_game, max_length=13)
 
     def get_absolute_url(self):
-        return reverse('scout:team_summary', kwargs={'number': self.frc_team.number})
+        return reverse('collector:team_summary', kwargs={'number': self.frc_team.number})
     
     def __str__(self):
         return f"Expected Auto Score: {self.auto_points}, Drive Train: {self.drive_type}, Preferred grid: {self.grid}, End Game: {self.charge_station}"

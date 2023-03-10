@@ -21,4 +21,4 @@ def team_summary(request, number):
     except Team.DoesNotExist:
         return HttpResponse("Team {} not found.".format(number))
 
-    return render(request, 'scout/team_summary.html', {'team': team})
+    return render(request, 'collector/team_summary.html', {'team': team})
