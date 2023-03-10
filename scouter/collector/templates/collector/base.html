@@ -1,0 +1,105 @@
+<html>
+  {% load static %}
+  {% load bootstrap5 %}
+
+    {# Load CSS and JavaScript #}
+    {% bootstrap_css %}
+    
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="utf-8">
+    <title>{% block title %}Lambda Corps Scouting{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css?family=Aldrich" rel="stylesheet">
+    <!-- <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/app.css' %}" rel="stylesheet"> -->
+
+    <style>
+      table#robot_rep {
+        outline-style: solid;
+        outline-width: 3px;
+        outline-color: black;
+        padding: 1.5em 1.5em 1.5em 1.5em;
+      }
+      table th#robot_rep {
+        outline-style: solid;
+        outline-width: 1px;
+        outline-color: black;
+        background-color: rgb(201, 201, 201);
+        padding: 1em 1em 1em 1em;
+      }
+      table td#robot_rep {
+        outline-style: solid;
+        outline-width: 1px;
+        outline-color: black;
+        background-color: white;
+        padding: 1em 1em 1em 1em;
+      }
+      li {
+        padding-left: 2em;
+        padding-right: 2em;
+        width: fit-content;
+      }
+      li#usr {
+        color: white;
+      }
+      table#robot_rep tr#red_al {
+        color: red;
+        font-weight: bold;
+      }
+      table#robot_rep tr#blue_al {
+        color: blue;
+        font-weight: bold;
+      }
+      table#robot_rep tr#scoring_header_row {
+        font-weight: bold;
+        background-color: rgb(192, 192, 192);
+      }
+      table#robot_rep tr#scoring_header_row td, table#robot_rep tr#scoring_header_row th {
+        border-style: solid;
+        border-width: 1px;
+        border-color: black;
+        padding: 0.2em 0.2em 0.2em 0.2em;
+      }
+      table#robot_rep tr#scoring_row td, table#robot_rep tr#scoring_row th {
+        border-style: solid;
+        border-width: 1px;
+        border-color: black;
+        padding: 0.5em 0.5em 0.5em 0.5em;
+      }
+      a.active_page {
+        color: white;
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+                <a class="nav-link" href="{% url 'collector:home' %}">Home</a>
+          </li>
+          <li class="nav-item">
+                <a class="nav-link" href="{% url 'collector:teams' %}">Teams</a>
+          </li>
+          <li class="nav-item">
+                <!-- Navbar Items -->
+          </li>
+          <li class="nav-item">
+                <!-- Navbar Items -->
+          </li>
+            <!-- Navbar Items -->
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+      <ol class="breadcrumb my-4">
+        {% block breadcrumb %}
+        {% endblock %}
+      </ol>
+      {% block content %}
+      {% endblock %}
+    </div>
+  </body>
+</html>

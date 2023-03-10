@@ -1,0 +1,36 @@
+{% extends 'collector/base.html' %}
+
+{% block title %}
+    Summary - Team {{ team.number }}
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'collector:scout_home' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'collector:teams' %}">Teams</a></li>
+	<li class="breadcrumb-item active">Team {{team.number }}</li>
+{% endblock %}
+
+{% block content %}
+    <h1>Team {{team.number}}: {{team.name}}</h1>
+    <table id="robot_rep">
+        <tr>
+            <th colspan="2" style="text-align: center; outline-style: solid; outline-width: 2px; outline-color: black;">Robot Statistics</th>
+        </tr>
+        <tr>
+            <th id="robot_rep">Expected Auto Score</th>
+            <td id="robot_rep">{{team.robot.auto_points}}</td>
+        </tr>
+        <tr>
+            <th id="robot_rep">Drive Train Type</th>
+            <td id="robot_rep">{{team.robot.drive_type}}</td>
+        </tr>
+        <tr>
+            <th id="robot_rep">Preferred Target</th>
+            <td id="robot_rep">{{team.robot.target}}</td>
+        </tr>
+        <tr>
+            <th id="robot_rep">Climb Height</th>
+            <td id="robot_rep">{{team.robot.climb}}</td>
+        </tr>
+    </table>
+{% endblock %}
