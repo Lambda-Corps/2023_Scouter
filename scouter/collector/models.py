@@ -92,6 +92,7 @@ class MatchResult(models.Model):
     # Foreign relationship to associate a given match to a specific team
     frc_team = models.ForeignKey(Team, related_name='matches', null=True , on_delete=models.CASCADE)
 
+    match_number = models.IntegerField(default=0)
     # Auto Scoring options
     auto_mobility = models.BooleanField(default=False)
     auto_low = models.IntegerField(default=0)

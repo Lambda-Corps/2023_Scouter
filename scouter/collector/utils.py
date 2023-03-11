@@ -23,9 +23,6 @@ def get_event_json(url):
 def update_event_teams():
     url = "https://www.thebluealliance.com/api/v3/event/2023mdbet/teams/simple"
     teams = get_event_json(url)
-
-    import pdb
-    pdb.set_trace()
     
     for team in teams:
         Team.objects.create(name=team['nickname'], number=team['team_number'], frc_key=team['key'])
@@ -144,13 +141,13 @@ def get_team_scoring_prediction(number):
             if match.tele_links > 0:
                 tele_point_total += 5 * match.tele_links
 
-            if match.end_scoring = 'None' or match.end_scoring = 'Failed':
-                endgame_point_total = += 0
-            elif match.end_scoring = 'Docked':
+            if match.end_scoring == 'None' or match.end_scoring == 'Failed':
+                endgame_point_total += 0
+            elif match.end_scoring == 'Docked':
                 endgame_point_total += 6
-            elif match.end_scoring = 'Engaged':
+            elif match.end_scoring == 'Engaged':
                 endgame_point_total += 10
-            elif match.end_scoring = 'Parked':
+            elif match.end_scoring == 'Parked':
                 endgame_point_total += 2
 
         return {'number': team.number, 'auto_points': auto_point_total, 'teleop_points': tele_point_total, 'endgame_points': endgame_point_total}

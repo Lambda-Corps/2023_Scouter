@@ -1,5 +1,5 @@
 import django_tables2 as tables
-from .models import Team
+from .models import Team, MatchResult
 from django_tables2.utils import A
 
 class TeamTable(tables.Table):
@@ -10,3 +10,12 @@ class TeamTable(tables.Table):
         model = Team
         template_name = 'django_tables2/bootstrap.html'
         fields = ['number', 'name', 'robot']
+
+
+class MatchResultTable(tables.Table):
+    frc_team = tables.Column(verbose_name="Team")
+
+    class Meta:
+        model = MatchResult
+        template_name = 'django_tables2/bootstrap.html'
+        exclude = ['id']
