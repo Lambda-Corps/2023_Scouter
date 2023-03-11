@@ -155,9 +155,8 @@ def get_team_scoring_prediction(number):
 
 def team_match_generator(matches_per_team):
     # Possible field entries
-    auto_target_field = ['High Goal', 'Low Goal']
-    tele_target_field = ['High Goal', 'Low Goal']
-    climb_height_field = [0, 4, 6, 10, 15]
+    auto_cs_options = ['None', 'Docked', 'Engaged']
+    tele_cs_options = ['None', 'Docked', 'Engaged', 'Failed']
     driver_rating_field = [1, 2, 3, 4, 5]
 
     teams = Team.objects.all()
@@ -166,15 +165,22 @@ def team_match_generator(matches_per_team):
         for x in range(1, matches_per_team):
             result = MatchResult(frc_team=team,
                                 match_number=x,
-                                auto_taxi=random.randint(0,1) == 0,
-                                auto_scored=random.randint(0,5),
-                                auto_target=auto_target_field[random.randint(0,1)],
-                                tele_low=random.randint(0,3),
+                                auto_mobility=random.randint(0,1) == 0,
+                                auto_low=random.randint(0,2),
+                                auto_mid=random.randint(0,2),
+                                auto_high=random.randint(0,2),
+                                auto_attempted=random.randint(0,2),
+                                auto_scored=random.randint(0,2),
+                                
+                                auto_cs=auto_cs_options[random.randint(0,2)],
+                                tele_low=random.randint(0,6),
+                                tele_mid=random.randint(0,6),
                                 tele_high=random.randint(0,6),
-                                climb_points=climb_height_field[random.randint(0,4)],
-                                climb_attempted=random.randint(0,1)==0,
-                                driver_rating=driver_rating_field[random.randint(0,4)],
-                                comments="Auto-generated Match"
+                                tele_attempted=random.randint(0,2),
+                                tele_scored=random.randint(0,2),
+                                tele_links=random.randint(0,3),
+                                end_scoring=tele_cs_options[random.randint(0,3)],
+                                driver_rating=random.randint(0,4)
                                 )
             result.save()
 
