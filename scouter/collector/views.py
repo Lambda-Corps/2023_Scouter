@@ -31,10 +31,13 @@ def team_summary(request, number):
     except Team.DoesNotExist:
         return HttpResponse("Team {} not found.".format(number))
 
-    table = MatchResultTable(MatchResult.objects.filter(frc_team=number))
+    # table = MatchResultTable(MatchResult.objects.filter(frc_team=number))
+    table = team.matches.all().order_by('-match_number')
+    last_three = utils.get_last3_scoring_prediction(number=number)
+    last_six = utils.get_last6_scoring_prediction(number=number)
     avg_score = utils.get_team_scoring_prediction(number=number)
 
-    return render(request, 'collector/team_summary.html', {'team': team, 'table': table, 'avg_score': avg_score})
+    return render(request, 'collector/team_summary.html', {'team': team, 'table': table, 'avg_score': avg_score, 'last_three': last_three, 'last_six': last_six})
 
 class MatchCreateView(LoginRequiredMixin, CreateView):
     model = MatchResult

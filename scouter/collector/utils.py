@@ -85,8 +85,9 @@ def get_team_scoring_prediction(number):
     matches = {}
     team = {}
     try:
-        team = Team.objects.get(frc_key=number)
+        team = Team.objects.get(number=number)
         matches = team.matches.all()
+
     except Team.DoesNotExist:
         return {'number': 1, 'auto_points': 1, 'teleop_points': 2, 'endgame_points': 3}
     
@@ -127,7 +128,12 @@ def get_team_scoring_prediction(number):
             if match.auto_high > 0:
                 auto_point_total += 6 * auto_high
 
-            match.auto_charge = match.auto_cs
+            if match.auto_cs == 'None' or match.auto_cs == 'Failed':
+                auto_point_total += 0
+            elif match.auto_cs == 'Docked':
+                auto_point_total += 10
+            elif match.auto_cs == 'Engaged':
+                auto_point_total += 12
 
             if match.tele_low > 0:
                 tele_point_total += 2 * match.tele_low
@@ -144,13 +150,181 @@ def get_team_scoring_prediction(number):
             if match.end_scoring == 'None' or match.end_scoring == 'Failed':
                 endgame_point_total += 0
             elif match.end_scoring == 'Docked':
-                endgame_point_total += 6
+                endgame_point_total += 8
             elif match.end_scoring == 'Engaged':
                 endgame_point_total += 10
             elif match.end_scoring == 'Parked':
                 endgame_point_total += 2
 
-        return {'number': team.number, 'auto_points': auto_point_total, 'teleop_points': tele_point_total, 'endgame_points': endgame_point_total}
+        auto_points = round(auto_point_total/match_count, 2)
+        tele_points = round(tele_point_total/match_count, 2)
+        endgame_points = round(endgame_point_total / match_count, 2)
+
+        return {'number': team.number, 'auto_points': auto_points, 'teleop_points': tele_points, 'endgame_points': endgame_points}
+
+
+def get_last6_scoring_prediction(number):
+    matches = {}
+    team = {}
+    try:
+        team = Team.objects.get(number=number)
+        matches = team.matches.all().order_by('-match_number')[:6]
+
+    except Team.DoesNotExist:
+        return {'number': 1, 'auto_points': 1, 'teleop_points': 2, 'endgame_points': 3}
+    
+    # print(matches)
+    match_count = matches.count()
+
+    if match_count == 0:
+        # use prediction from pit scout
+        return {'number': team.number, 'auto_points': 1, 'teleop_points': 2, 'endgame_points': 3}
+    else:
+        # Sum up the matches and give an average
+        auto_mobility = 0.0
+        auto_low = 0.0
+        auto_mid = 0.0
+        auto_high = 0.0
+        auto_charge = "No attempt"
+
+        tele_low = 0.0
+        tele_mid = 0.0
+        tele_high = 0.0
+        tele_attempted_balance = "none"
+        tele_charge_links = 0.0
+
+        auto_point_total = 0.0
+        tele_point_total = 0.0
+        endgame_point_total = 0.0
+
+        for match in matches:
+            if match.auto_mobility is True:
+                auto_point_total += 2
+
+            if match.auto_low > 0:
+                auto_point_total += 3 * auto_low
+
+            if match.auto_mid > 0:
+                auto_point_total += 4 * auto_mid
+
+            if match.auto_high > 0:
+                auto_point_total += 6 * auto_high
+
+            if match.auto_cs == 'None' or match.auto_cs == 'Failed':
+                auto_point_total += 0
+            elif match.auto_cs == 'Docked':
+                auto_point_total += 10
+            elif match.auto_cs == 'Engaged':
+                auto_point_total += 12
+
+            if match.tele_low > 0:
+                tele_point_total += 2 * match.tele_low
+
+            if match.tele_mid > 0:
+                tele_point_total += 3 * match.tele_mid
+
+            if match.tele_high > 0:
+                tele_point_total += 5 * match.tele_high
+
+            if match.tele_links > 0:
+                tele_point_total += 5 * match.tele_links
+
+            if match.end_scoring == 'None' or match.end_scoring == 'Failed':
+                endgame_point_total += 0
+            elif match.end_scoring == 'Docked':
+                endgame_point_total += 8
+            elif match.end_scoring == 'Engaged':
+                endgame_point_total += 10
+            elif match.end_scoring == 'Parked':
+                endgame_point_total += 2
+
+        auto_points = round(auto_point_total/match_count, 2)
+        tele_points = round(tele_point_total/match_count, 2)
+        endgame_points = round(endgame_point_total / match_count, 2)
+
+        return {'number': team.number, 'auto_points': auto_points, 'teleop_points': tele_points, 'endgame_points': endgame_points}
+
+
+def get_last3_scoring_prediction(number):
+    matches = {}
+    team = {}
+    try:
+        team = Team.objects.get(number=number)
+        matches = team.matches.all().order_by('-match_number')[:3]
+
+    except Team.DoesNotExist:
+        return {'number': 1, 'auto_points': 1, 'teleop_points': 2, 'endgame_points': 3}
+    
+    # print(matches)
+    match_count = matches.count()
+
+    if match_count == 0:
+        # use prediction from pit scout
+        return {'number': team.number, 'auto_points': 1, 'teleop_points': 2, 'endgame_points': 3}
+    else:
+        # Sum up the matches and give an average
+        auto_mobility = 0.0
+        auto_low = 0.0
+        auto_mid = 0.0
+        auto_high = 0.0
+        auto_charge = "No attempt"
+
+        tele_low = 0.0
+        tele_mid = 0.0
+        tele_high = 0.0
+        tele_attempted_balance = "none"
+        tele_charge_links = 0.0
+
+        auto_point_total = 0.0
+        tele_point_total = 0.0
+        endgame_point_total = 0.0
+
+        for match in matches:
+            if match.auto_mobility is True:
+                auto_point_total += 2
+
+            if match.auto_low > 0:
+                auto_point_total += 3 * auto_low
+
+            if match.auto_mid > 0:
+                auto_point_total += 4 * auto_mid
+
+            if match.auto_high > 0:
+                auto_point_total += 6 * auto_high
+
+            if match.auto_cs == 'None' or match.auto_cs == 'Failed':
+                auto_point_total += 0
+            elif match.auto_cs == 'Docked':
+                auto_point_total += 10
+            elif match.auto_cs == 'Engaged':
+                auto_point_total += 12
+
+            if match.tele_low > 0:
+                tele_point_total += 2 * match.tele_low
+
+            if match.tele_mid > 0:
+                tele_point_total += 3 * match.tele_mid
+
+            if match.tele_high > 0:
+                tele_point_total += 5 * match.tele_high
+
+            if match.tele_links > 0:
+                tele_point_total += 5 * match.tele_links
+
+            if match.end_scoring == 'None' or match.end_scoring == 'Failed':
+                endgame_point_total += 0
+            elif match.end_scoring == 'Docked':
+                endgame_point_total += 8
+            elif match.end_scoring == 'Engaged':
+                endgame_point_total += 10
+            elif match.end_scoring == 'Parked':
+                endgame_point_total += 2
+
+        auto_points = round(auto_point_total/match_count, 2)
+        tele_points = round(tele_point_total/match_count, 2)
+        endgame_points = round(endgame_point_total / match_count, 2)
+
+        return {'number': team.number, 'auto_points': auto_points, 'teleop_points': tele_points, 'endgame_points': endgame_points}
 
 
 def team_match_generator(matches_per_team):
