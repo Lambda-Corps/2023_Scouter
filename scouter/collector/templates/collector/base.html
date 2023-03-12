@@ -70,23 +70,32 @@
         color: white;
         text-decoration: underline;
       }
+      table.footer_nav {
+        padding: 0.5em 0.5em 0.5em 0.5em;
+        background-color: lightgray;
+        width: 100%;
+      }
+      a#footer_link {
+        width: 25%;
+        vertical-align: middle;
+      }
     </style>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
+          <li class="nav-item">
                 <a class="nav-link" href="{% url 'collector:home' %}">Home</a>
           </li>
           <li class="nav-item">
                 <a class="nav-link" href="{% url 'collector:teams' %}">Teams</a>
           </li>
           <li class="nav-item">
-                <!-- Navbar Items -->
+                <a class="nav-link" href="{% url 'collector:submit_match' %}">Submit Match</a>
           </li>
           <li class="nav-item">
-                <!-- Navbar Items -->
+                <a class="nav-link" href="{% url 'collector:matches' %}">Matches</a>
           </li>
             <!-- Navbar Items -->
         </ul>
@@ -102,4 +111,15 @@
       {% endblock %}
     </div>
   </body>
+
+  <footer>
+    <table class="footer_nav">
+      <tr>
+        <td><a class="nav-link" id="footer_link" href="{% url 'collector:home' %}">Home</a></td>
+        <td><a class="nav-link" id="footer_link" href="{% url 'collector:teams' %}">Teams</a></td>
+        <td><a class="nav-link" id="footer_link" href="{% url 'collector:submit_match' %}">Submit Match</a></td>
+        <td><a class="nav-link" id="footer_link" href="{% url 'collector:matches' %}">Matches</a></td>
+      </tr>
+    </table>
+  </footer>
 </html>

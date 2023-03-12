@@ -4,9 +4,15 @@ from django_tables2 import RequestConfig
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import DetailView, FormView, CreateView, UpdateView, ListView
+import collector.utils as utils
 
 from collector.models import Team, Robot, MatchResult
 from collector.tables import TeamTable, MatchResultTable
+from collector.models import Team, MatchResult
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+from django.views.generic import DetailView, FormView, CreateView, UpdateView, ListView
+
 
 from . import views
 
@@ -25,7 +31,10 @@ def team_summary(request, number):
     except Team.DoesNotExist:
         return HttpResponse("Team {} not found.".format(number))
 
-    return render(request, 'collector/team_summary.html', {'team': team})
+    table = MatchResultTable(MatchResult.objects.filter(frc_team=number))
+    avg_score = utils.get_team_scoring_prediction(number=number)
+
+    return render(request, 'collector/team_summary.html', {'team': team, 'table': table, 'avg_score': avg_score})
 
 class MatchCreateView(LoginRequiredMixin, CreateView):
     model = MatchResult
@@ -46,4 +55,4 @@ class MatchResultListView(ListView):
 def matches(request):
     table = MatchResultTable(MatchResult.objects.all())
     RequestConfig(request).configure(table)
-    return render(request, 'collector/teams.html', {'table': table})
+    return render(request, 'collector/matches.html', {'table': table})

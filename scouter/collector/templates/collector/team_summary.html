@@ -1,4 +1,5 @@
 {% extends 'collector/base.html' %}
+{% load render_table from django_tables2 %}
 
 {% block title %}
     Summary - Team {{ team.number }}
@@ -25,12 +26,33 @@
             <td id="robot_rep">{{team.robot.drive_type}}</td>
         </tr>
         <tr>
-            <th id="robot_rep">Preferred Target</th>
-            <td id="robot_rep">{{team.robot.target}}</td>
+            <th id="robot_rep">Preferred Grid Target</th>
+            <td id="robot_rep">{{team.robot.grid}}</td>
         </tr>
         <tr>
-            <th id="robot_rep">Climb Height</th>
-            <td id="robot_rep">{{team.robot.climb}}</td>
+            <th id="robot_rep">Charge Station</th>
+            <td id="robot_rep">{{team.robot.charge_station}}</td>
         </tr>
     </table>
+
+    <br />
+    <h3>{{team.name}}'s Expected Score</h3>
+    <table id="robot_rep">
+        <tr>
+            <th id="robot_rep"></th>
+            <td id="robot_rep">Auto</td>
+            <td id="robot_rep">Teleop</td>
+            <td id="robot_rep">Endgame</td>
+        </tr>
+        <tr>
+            <th id="robot_rep"></th>
+            <td id="robot_rep">{{avg_score.auto_points}}</td>
+            <td id="robot_rep">{{avg_score.teleop_points}}</td>
+            <td id="robot_rep">{{avg_score.endgame_points}}</td>
+        </tr>
+    </table>
+
+    <br />
+    <h3>{{team.name}}'s Matches</h3>
+    {% render_table table %}
 {% endblock %}

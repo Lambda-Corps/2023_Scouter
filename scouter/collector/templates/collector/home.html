@@ -8,10 +8,10 @@
     <h4>Navigation</h3>
     <nav>
         <ul>
-            <li class="nav-item">Report a Match</li>
+            <li class="nav-item"><a href="{% url 'collector:submit_match' %}">Report a Match</a></li>
             <li class="nav-item">Create a Pit Scouting Report</li>
-            <li class="nav-item">Teams</li>
-            <li class="nav-item">Matches</li>
+            <li class="nav-item"><a href="{% url 'collector:teams' %}">Teams</a></li>
+            <li class="nav-item"><a href="{% url 'collector:matches' %}">Matches</a></li>
         </ul>
     </nav>
 {% endblock %}
