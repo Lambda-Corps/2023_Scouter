@@ -7,9 +7,9 @@
 {% block content %}
     <h4>Navigation</h3>
     <nav>
-        <ul>
+        <ul style="list-style-type: none;">
             <li class="nav-item"><a href="{% url 'collector:submit_match' %}">Report a Match</a></li>
-            <li class="nav-item">Create a Pit Scouting Report</li>
+            <li class="nav-item"><a href="{% url 'collector:pit_scout' %}">Pit Scouting Report</a></li>
             <li class="nav-item"><a href="{% url 'collector:teams' %}">Teams</a></li>
             <li class="nav-item"><a href="{% url 'collector:matches' %}">Matches</a></li>
         </ul>

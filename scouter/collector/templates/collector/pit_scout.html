@@ -1,20 +1,20 @@
 {% extends 'collector/base.html' %}
 
 {% block title %}
-	Match Report - {{ block.super }}
+	Pit Scouting Report - {{ block.super }}
 {% endblock %}
 
 {% block breadcrumb %}
 	<li class="breadcrumb-item"><a href="{% url 'collector:home' %}">Home</a></li>
     <li class="breadcrumb-item"><a href="{% url 'collector:teams' %}">Teams</a></li>
-    <li class="breadcrumb-item active">Submit Match Report</li>
+    <li class="breadcrumb-item active">Submit Pit Scouting Report</li>
 {% endblock %}
 
 {% block content %}
-<h1>Match Report</h1>
+<h1>Pit Scouting Report</h1>
 <form method=POST>
     {% csrf_token %}
     {{form.as_p}}
-    <input type='submit' value='Submit Match' />
+    <input type='submit' value='Submit Scouting Report' />
 </form>
 {% endblock %}

@@ -70,14 +70,29 @@
         color: white;
         text-decoration: underline;
       }
-      table.footer_nav {
-        padding: 0.5em 0.5em 0.5em 0.5em;
+      footer {
+        margin-top: 3em;
+        margin-bottom: 0em;
+        padding-top: 0.5em;
+        padding-left: 0.5em;
+        padding-right: 0.5em;
+        padding-bottom: 0.5em;
         background-color: lightgray;
         width: 100%;
       }
-      a#footer_link {
+      footer nav {
+        width: 100%;
+        margin-left: auto ;
+        margin-right: auto ;
+      }
+      footer nav ul {
+        list-style-type: none;
+        text-align: center;
+        padding: 0 0 0 0;
+      }
+      footer nav ul li {
         width: 25%;
-        vertical-align: middle;
+        display:inline-block;
       }
     </style>
   </head>
@@ -113,13 +128,13 @@
   </body>
 
   <footer>
-    <table class="footer_nav">
-      <tr>
-        <td><a class="nav-link" id="footer_link" href="{% url 'collector:home' %}">Home</a></td>
-        <td><a class="nav-link" id="footer_link" href="{% url 'collector:teams' %}">Teams</a></td>
-        <td><a class="nav-link" id="footer_link" href="{% url 'collector:submit_match' %}">Submit Match</a></td>
-        <td><a class="nav-link" id="footer_link" href="{% url 'collector:matches' %}">Matches</a></td>
-      </tr>
-    </table>
+    <nav>
+      <ul>
+        <li><a id="footer_link" href="{% url 'collector:home' %}">Home</a></td>
+        <li><a id="footer_link" href="{% url 'collector:teams' %}">Teams</a></td>
+        <li><a id="footer_link" href="{% url 'collector:submit_match' %}">Submit Match</a></td>
+        <li><a id="footer_link" href="{% url 'collector:matches' %}">Matches</a></td>
+        </ul>
+      </nav>
   </footer>
 </html>
