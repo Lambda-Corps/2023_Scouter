@@ -33,9 +33,6 @@ class Robot(models.Model):
     end_game = ((UNTESTED, 'Untested'), (UNRELIABLE, 'Unreliable'), (RELIABLE, 'Reliable'))
     drive_trains = ((SWERVE, 'Swerve'), (WCD, 'West Coast'), (MECANUM, 'Mecanum'))
 
-    # auto points (int field)
-    auto_points = models.IntegerField(default=0)
-
     # drive train type
     drive_type = models.CharField(choices=drive_trains, max_length=12)
     # goal (low/high/mid)
@@ -48,7 +45,7 @@ class Robot(models.Model):
         return reverse('collector:team_summary', kwargs={'number': self.frc_team.number})
     
     def __str__(self):
-        return f"Expected Auto Score: {self.auto_points}, Drive Train: {self.drive_type}, Preferred grid: {self.grid}, End Game: {self.charge_station}"
+        return f"Expected Auto Score: Drive Train: {self.drive_type}, Preferred grid: {self.grid}, End Game: {self.charge_station}"
 
 
 class MatchResult(models.Model):
