@@ -1,5 +1,5 @@
 import django_tables2 as tables
-from .models import Team, MatchResult
+from .models import Team, MatchResult, TeamEfficiency
 from django_tables2.utils import A
 
 class TeamTable(tables.Table):
@@ -17,5 +17,14 @@ class MatchResultTable(tables.Table):
 
     class Meta:
         model = MatchResult
+        template_name = 'django_tables2/bootstrap.html'
+        exclude = ['id']
+
+
+class EfficiencyTable(tables.Table):
+    team = tables.LinkColumn('collector:team_summary', args=[A('team.number')])
+
+    class Meta:
+        model = TeamEfficiency
         template_name = 'django_tables2/bootstrap.html'
         exclude = ['id']

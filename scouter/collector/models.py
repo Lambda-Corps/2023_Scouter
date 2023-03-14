@@ -123,5 +123,19 @@ class MatchResult(models.Model):
 
     def __str__(self):
         return f"Match Number: {self.match_number} -- Team Number {self.frc_team.number}"
+
+
+class TeamEfficiency(models.Model):
+    team = models.ForeignKey(Team, related_name='efficiency', on_delete=models.CASCADE)
+    match_count = models.PositiveSmallIntegerField(default=0)
+    auto_pieces = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
+    auto_charging = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
+    auto_mobility = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
+    teleop_low = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
+    teleop_mid = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
+    teleop_high = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
+    engage_attempts = models.IntegerField(default=0)
+    endgame_points = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
+    driver_rating = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
     
     

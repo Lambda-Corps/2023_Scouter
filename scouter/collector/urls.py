@@ -9,4 +9,5 @@ urlpatterns = [
     path('matches/', views.matches, name='matches'),
     path('submit_match/', views.MatchCreateView.as_view(), name='submit_match'),
     path('pit_scout/', views.RobotCreateView.as_view(), name='pit_scout'),
+    path('efficiency/', views.efficiency, name='efficiency')
 ]
