@@ -139,7 +139,7 @@ def update_efficiency_numbers():
 
             # Average the totals across their matches
             team_eff.match_count = num_matches
-            team_eff.auto_pieces = auto_charging_total / num_matches
+            team_eff.auto_pieces = auto_pieces_total / num_matches
             team_eff.auto_charging = auto_charging_total / num_matches
             team_eff.auto_mobility = auto_mobility_total / num_matches
             team_eff.teleop_low = teleop_low_total / num_matches
