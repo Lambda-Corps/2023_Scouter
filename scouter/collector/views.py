@@ -102,8 +102,8 @@ def update_efficiency_numbers():
                 auto_pieces_total += match.auto_mid * 4
                 auto_pieces_total += match.auto_high * 6
                 if match.auto_attempted_cs:
-                    import pdb
-                    pdb.set_trace()
+                    # import pdb
+                    # pdb.set_trace()
                     if match.auto_cs == 'Engaged':
                         auto_charging_total += 12
                     if match.auto_cs == 'Docked':
