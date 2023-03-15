@@ -95,18 +95,12 @@ class MatchResult(models.Model):
     auto_low = models.IntegerField(default=0)
     auto_mid = models.IntegerField(default=0)
     auto_high = models.IntegerField(default=0)
-    auto_attempted = models.IntegerField(default=0)
-    auto_scored = models.IntegerField(default=0)
-    auto_attempted_cs = models.BooleanField(default=False)
-    auto_cs = models.CharField(choices=auto_cs_field_choices, default=AUTO_CS_NONE, max_length=13)
+    auto_charge_station = models.CharField(choices=auto_cs_field_choices, default=AUTO_CS_NONE, max_length=13)
 
     # Teleop Scoring options
     tele_low = models.IntegerField(default=0)
     tele_mid = models.IntegerField(default=0)
     tele_high = models.IntegerField(default=0)
-    tele_attempted = models.IntegerField(default=0)
-    tele_scored = models.IntegerField(default=0)
-    tele_links = models.IntegerField(default=0)
 
     # Endgame Scoring options
     end_scoring = models.CharField(choices=endgame_cs_field_choices, default=END_NONE, max_length=15)

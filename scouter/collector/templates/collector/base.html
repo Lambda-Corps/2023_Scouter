@@ -70,29 +70,40 @@
         color: white;
         text-decoration: underline;
       }
-      footer {
-        margin-top: 3em;
-        margin-bottom: 0em;
-        padding-top: 0.5em;
-        padding-left: 0.5em;
-        padding-right: 0.5em;
-        padding-bottom: 0.5em;
-        background-color: lightgray;
-        width: 100%;
+      
+      @media screen and (max-width:1024px) {
+        footer {
+          margin-top: 3em;
+          margin-bottom: 0em;
+          padding-top: 0.5em;
+          padding-left: 0.5em;
+          padding-right: 0.5em;
+          padding-bottom: 0.5em;
+          background-color: lightgray;
+          width: 100%;
+        }
+        footer nav {
+          width: 100%;
+          margin-left: auto;
+          margin-right: auto;
+        }
+        footer nav ul {
+          list-style-type: none;
+          margin: auto;
+          width: 50%;
+          vertical-align: center;
+        }
+        footer nav ul li {
+          vertical-align: center;
+        }
+        footer nav ul li a {
+          text-align: center;
+        }
       }
-      footer nav {
-        width: 100%;
-        margin-left: auto ;
-        margin-right: auto ;
-      }
-      footer nav ul {
-        list-style-type: none;
-        text-align: center;
-        padding: 0 0 0 0;
-      }
-      footer nav ul li {
-        width: 25%;
-        display:inline-block;
+      @media screen and (min-width:1024px) {
+        footer {
+          display: none;
+        }
       }
     </style>
   </head>
@@ -101,18 +112,20 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-                <a class="nav-link" href="{% url 'collector:home' %}">Home</a>
+            <a class="nav-link" href="{% url 'collector:home' %}">Home</a>
           </li>
           <li class="nav-item">
-                <a class="nav-link" href="{% url 'collector:teams' %}">Teams</a>
+            <a class="nav-link" href="{% url 'collector:teams' %}">Teams</a>
           </li>
           <li class="nav-item">
-                <a class="nav-link" href="{% url 'collector:submit_match' %}">Submit Match</a>
+            <a class="nav-link" href="{% url 'collector:submit_match' %}">Submit Match</a>
           </li>
           <li class="nav-item">
-                <a class="nav-link" href="{% url 'collector:matches' %}">Matches</a>
+            <a class="nav-link" href="{% url 'collector:pit_scout' %}">Submit Pit Scouting Report</a>
           </li>
-            <!-- Navbar Items -->
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'collector:matches' %}">Matches</a>
+          </li>
         </ul>
       </div>
     </nav>
@@ -128,13 +141,16 @@
   </body>
 
   <footer>
-    <nav>
-      <ul>
-        <li><a id="footer_link" href="{% url 'collector:home' %}">Home</a></td>
-        <li><a id="footer_link" href="{% url 'collector:teams' %}">Teams</a></td>
-        <li><a id="footer_link" href="{% url 'collector:submit_match' %}">Submit Match</a></td>
-        <li><a id="footer_link" href="{% url 'collector:matches' %}">Matches</a></td>
+    <div class="mobil-only">
+      <nav>
+        <ul>
+          <li id="footer_link"><a href="{% url 'collector:home' %}">Home</a></li>
+          <li id="footer_link"><a href="{% url 'collector:teams' %}">Teams</a></li>
+          <li id="footer_link"><a href="{% url 'collector:submit_match' %}">Submit Match</a></li>
+          <li id="footer_link"><a href="{% url 'collector:pit_scout' %}">Pit Scouting</a></li>
+          <li id="footer_link"><a href="{% url 'collector:matches' %}">Matches</a></li>
         </ul>
       </nav>
+    </div>
   </footer>
 </html>
