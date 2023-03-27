@@ -1,7 +1,9 @@
-{% extends 'collector:base.html' %}
+{% extends 'collector/base.html' %}
 
-{% block title %}
-    Prediction of {{number}}
+{% block breadcrumb %}
+	<li class="breadcrumb-item"><a href="{% url 'collector:home' %}">Home</a></li>
+	<li class="breadcrumb-item"><a href="{% url 'collector:matches' %}">Matches</a></li>
+	<li class="breadcrumb-item active">Match Preview</li>
 {% endblock %}
 
 {% block content %}

@@ -21,7 +21,7 @@ def get_event_json(url):
 
 
 def update_event_teams():
-    url = "https://www.thebluealliance.com/api/v3/event/2023mdbet/teams/simple"
+    url = "https://www.thebluealliance.com/api/v3/event/2023mdtim/teams/simple"
     teams = get_event_json(url)
     
     for team in teams:
@@ -42,7 +42,7 @@ def update_event_teams_json():
 
 
 def get_frc_match_json():
-    url = 'https://www.thebluealliance.com/api/v3/event/2023mdbet/matches/simple'
+    url = 'https://www.thebluealliance.com/api/v3/event/2023mdtim/matches/simple'
     # url = 'https://www.thebluealliance.com/api/v3/event/2022chcmp/matches/simple'
 
     return get_event_json(url)
@@ -105,9 +105,12 @@ def get_team_scoring_prediction(number):
         auto_high = 0.0
         auto_charge = "No attempt"
 
-        tele_low = 0.0
-        tele_mid = 0.0
-        tele_high = 0.0
+        tele_cubes_low = 0.0
+        tele_cones_low = 0.0
+        tele_cubes_mid = 0.0
+        tele_cones_mid = 0.0
+        tele_cubes_high = 0.0
+        tele_cones_high = 0.0
         tele_attempted_balance = "none"
         tele_charge_links = 0.0
 
@@ -120,32 +123,35 @@ def get_team_scoring_prediction(number):
                 auto_point_total += 2
 
             if match.auto_low > 0:
-                auto_point_total += 3 * auto_low
+                auto_point_total += 3 * match.auto_low
 
             if match.auto_mid > 0:
-                auto_point_total += 4 * auto_mid
+                auto_point_total += 4 * match.auto_mid
 
             if match.auto_high > 0:
-                auto_point_total += 6 * auto_high
+                auto_point_total += 6 * match.auto_high
 
-            if match.auto_cs == 'None' or match.auto_cs == 'Failed':
+            if match.auto_charge_station == 'None' or match.auto_charge_station == 'Failed':
                 auto_point_total += 0
-            elif match.auto_cs == 'Docked':
+            elif match.auto_charge_station == 'Docked':
                 auto_point_total += 10
-            elif match.auto_cs == 'Engaged':
+            elif match.auto_charge_station == 'Engaged':
                 auto_point_total += 12
 
-            if match.tele_low > 0:
-                tele_point_total += 2 * match.tele_low
+            if match.tele_cones_low > 0:
+                tele_point_total += 2 * match.tele_cones_low
+            if match.tele_cubes_low > 0:
+                tele_point_total += 2 * match.tele_cubes_low
 
-            if match.tele_mid > 0:
-                tele_point_total += 3 * match.tele_mid
+            if match.tele_cones_mid > 0:
+                tele_point_total += 3 * match.tele_cones_mid
+            if match.tele_cubes_mid > 0:
+                tele_point_total += 3 * match.tele_cubes_mid
 
-            if match.tele_high > 0:
-                tele_point_total += 5 * match.tele_high
-
-            if match.tele_links > 0:
-                tele_point_total += 5 * match.tele_links
+            if match.tele_cones_high > 0:
+                tele_point_total += 5 * match.tele_cones_high
+            if match.tele_cubes_high > 0:
+                tele_point_total += 5 * match.tele_cubes_high
 
             if match.end_scoring == 'None' or match.end_scoring == 'Failed':
                 endgame_point_total += 0
@@ -187,9 +193,12 @@ def get_last6_scoring_prediction(number):
         auto_high = 0.0
         auto_charge = "No attempt"
 
-        tele_low = 0.0
-        tele_mid = 0.0
-        tele_high = 0.0
+        tele_cubes_low = 0.0
+        tele_cones_low = 0.0
+        tele_cubes_mid = 0.0
+        tele_cones_mid = 0.0
+        tele_cubes_high = 0.0
+        tele_cones_high = 0.0
         tele_attempted_balance = "none"
         tele_charge_links = 0.0
 
@@ -202,32 +211,35 @@ def get_last6_scoring_prediction(number):
                 auto_point_total += 2
 
             if match.auto_low > 0:
-                auto_point_total += 3 * auto_low
+                auto_point_total += 3 * match.auto_low
 
             if match.auto_mid > 0:
-                auto_point_total += 4 * auto_mid
+                auto_point_total += 4 * match.auto_mid
 
             if match.auto_high > 0:
-                auto_point_total += 6 * auto_high
+                auto_point_total += 6 * match.auto_high
 
-            if match.auto_cs == 'None' or match.auto_cs == 'Failed':
+            if match.auto_charge_station == 'None' or match.auto_charge_station == 'Failed':
                 auto_point_total += 0
-            elif match.auto_cs == 'Docked':
+            elif match.auto_charge_station == 'Docked':
                 auto_point_total += 10
-            elif match.auto_cs == 'Engaged':
+            elif match.auto_charge_station == 'Engaged':
                 auto_point_total += 12
 
-            if match.tele_low > 0:
-                tele_point_total += 2 * match.tele_low
+            if match.tele_cones_low > 0:
+                tele_point_total += 2 * match.tele_cones_low
+            if match.tele_cubes_low > 0:
+                tele_point_total += 2 * match.tele_cubes_low
 
-            if match.tele_mid > 0:
-                tele_point_total += 3 * match.tele_mid
+            if match.tele_cones_mid > 0:
+                tele_point_total += 3 * match.tele_cones_mid
+            if match.tele_cubes_mid > 0:
+                tele_point_total += 3 * match.tele_cubes_mid
 
-            if match.tele_high > 0:
-                tele_point_total += 5 * match.tele_high
-
-            if match.tele_links > 0:
-                tele_point_total += 5 * match.tele_links
+            if match.tele_cones_high > 0:
+                tele_point_total += 5 * match.tele_cones_high
+            if match.tele_cubes_high > 0:
+                tele_point_total += 5 * match.tele_cubes_high
 
             if match.end_scoring == 'None' or match.end_scoring == 'Failed':
                 endgame_point_total += 0
@@ -269,9 +281,12 @@ def get_last3_scoring_prediction(number):
         auto_high = 0.0
         auto_charge = "No attempt"
 
-        tele_low = 0.0
-        tele_mid = 0.0
-        tele_high = 0.0
+        tele_cubes_low = 0.0
+        tele_cones_low = 0.0
+        tele_cubes_mid = 0.0
+        tele_cones_mid = 0.0
+        tele_cubes_high = 0.0
+        tele_cones_high = 0.0
         tele_attempted_balance = "none"
         tele_charge_links = 0.0
 
@@ -284,32 +299,36 @@ def get_last3_scoring_prediction(number):
                 auto_point_total += 2
 
             if match.auto_low > 0:
-                auto_point_total += 3 * auto_low
+                auto_point_total += 3 * match.auto_low
 
             if match.auto_mid > 0:
-                auto_point_total += 4 * auto_mid
+                auto_point_total += 4 * match.auto_mid
 
             if match.auto_high > 0:
-                auto_point_total += 6 * auto_high
+                auto_point_total += 6 * match.auto_high
 
-            if match.auto_cs == 'None' or match.auto_cs == 'Failed':
+            if match.auto_charge_station == 'None' or match.auto_charge_station == 'Failed':
                 auto_point_total += 0
-            elif match.auto_cs == 'Docked':
+            elif match.auto_charge_station == 'Docked':
                 auto_point_total += 10
-            elif match.auto_cs == 'Engaged':
+            elif match.auto_charge_station == 'Engaged':
                 auto_point_total += 12
 
-            if match.tele_low > 0:
-                tele_point_total += 2 * match.tele_low
+            if match.tele_cones_low > 0:
+                tele_point_total += 2 * match.tele_cones_low
+            if match.tele_cubes_low > 0:
+                tele_point_total += 2 * match.tele_cubes_low
 
-            if match.tele_mid > 0:
-                tele_point_total += 3 * match.tele_mid
+            if match.tele_cones_mid > 0:
+                tele_point_total += 3 * match.tele_cones_mid
+            if match.tele_cubes_mid > 0:
+                tele_point_total += 3 * match.tele_cubes_mid
 
-            if match.tele_high > 0:
-                tele_point_total += 5 * match.tele_high
+            if match.tele_cones_high > 0:
+                tele_point_total += 5 * match.tele_cones_high
+            if match.tele_cubes_high > 0:
+                tele_point_total += 5 * match.tele_cubes_high
 
-            if match.tele_links > 0:
-                tele_point_total += 5 * match.tele_links
 
             if match.end_scoring == 'None' or match.end_scoring == 'Failed':
                 endgame_point_total += 0
@@ -343,16 +362,14 @@ def team_match_generator(matches_per_team):
                                 auto_low=random.randint(0,2),
                                 auto_mid=random.randint(0,2),
                                 auto_high=random.randint(0,2),
-                                auto_attempted=random.randint(0,2),
-                                auto_scored=random.randint(0,2),
                                 
-                                auto_cs=auto_cs_options[random.randint(0,2)],
-                                tele_low=random.randint(0,6),
-                                tele_mid=random.randint(0,6),
-                                tele_high=random.randint(0,6),
-                                tele_attempted=random.randint(0,2),
-                                tele_scored=random.randint(0,2),
-                                tele_links=random.randint(0,3),
+                                auto_charge_station=auto_cs_options[random.randint(0,2)],
+                                tele_cones_low=random.randint(0,2),
+                                tele_cubes_low=random.randint(0,2),
+                                tele_cones_mid=random.randint(0,2),
+                                tele_cubes_mid=random.randint(0,2),
+                                tele_cones_high=random.randint(0,2),
+                                tele_cubes_high=random.randint(0,2),
                                 end_scoring=tele_cs_options[random.randint(0,3)],
                                 driver_rating=random.randint(0,4)
                                 )

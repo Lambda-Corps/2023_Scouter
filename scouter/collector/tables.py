@@ -18,7 +18,23 @@ class MatchResultTable(tables.Table):
     class Meta:
         model = MatchResult
         template_name = 'django_tables2/bootstrap.html'
-        exclude = ['id']
+        exclude = ['ID', 'id', ' ID', ' id', 'id ', 'id ']
+
+class MatchListTable(tables.Table):
+    frc_team = tables.Column(verbose_name="Team")
+
+    class Meta:
+        model = MatchResult
+        template_name = 'django_tables2/bootstrap.html'
+        exclude = ['id', 'comments']
+
+class SummaryResultTable(tables.Table):
+    frc_team = tables.Column(verbose_name="Team")
+
+    class Meta:
+        model = MatchResult
+        template_name = 'django_tables2/bootstrap.html'
+        exclude = ['id', 'Team']
 
 
 class EfficiencyTable(tables.Table):
@@ -27,4 +43,4 @@ class EfficiencyTable(tables.Table):
     class Meta:
         model = TeamEfficiency
         template_name = 'django_tables2/bootstrap.html'
-        exclude = ['id']
+        exclude = ['ID', 'id']
