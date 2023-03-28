@@ -63,7 +63,7 @@ def get_playoff_match(type, number):
     matches = get_frc_match_json()
 
     for match in matches:
-        if match['comp_level'] == type and match['match_number'] == number:
+        if match['comp_level'] == type and match['set_number'] == number:
             return match
 
     # didn't find one
