@@ -51,7 +51,7 @@ class Robot(models.Model):
     manipulator = models.CharField(choices=manipulator_options, max_length=8, default=NONE)
 
     # driver experience
-    driver_experience = models.IntegerField(default=0, max_length=1)
+    driver_experience = models.IntegerField(default=0)
 
     # dimensions
     length = models.DecimalField(decimal_places=2, max_digits=4, default=0)
@@ -75,41 +75,20 @@ class MatchResult(models.Model):
     AUTO_CS_DOCKED = 'Docked'
     AUTO_CS_ENGAGED = 'Engaged'
 
-    GRID_LOW = 'Low Grid'
-    GRID_MID = 'Mid Grid'
-    GRID_HIGH = 'High Grid'
-    
-    TELELOW = 'Low Grid'
-    TELEHIGH = 'High Grid'
-    TELEMOD = 'Mid Grid'
-
-    PICKUP_GROUND = 'Ground'
-    PICKUP_SUB    = 'Substation'
-    PICKUP_BOTH   = 'Both'
-
     END_PARKED = 'Parked'
     END_DOCKED = 'Docked'
     END_ENGAGED = 'Engaged'
     END_FAILED = 'Endgame Failed'
     END_NONE = 'None'
 
-    ONE = 'Really Bad'
-    TWO = 'Bad'
-    THREE = 'Moderate'
-    FOUR = 'Good'
-    FIVE = 'Really Good'
-
-    CLEAN = 'No penalties'
-    FEW = 'One or Two penalties'
-    MODERATE = 'Multiple Penalties'
-    SEVERE = 'A lot of penalties'
+    CLEAN = 'None'
+    ONE = 'One'
+    TWO = 'Two'
+    SEVERE = 'Three +'
 
     auto_cs_field_choices = ((AUTO_CS_NONE, 'No Auto'), (AUTO_CS_FAILED, 'Failed'), (AUTO_CS_DOCKED, 'Docked'), (AUTO_CS_ENGAGED, 'Engaged'))
-    auto_score_field_choices = ((GRID_LOW, 'Low'), (GRID_MID, 'Mid'), (GRID_HIGH, 'High'))
     endgame_cs_field_choices = ((END_NONE, 'None'), (END_FAILED, 'Failed'), (END_DOCKED, 'Docked'), (END_ENGAGED, 'Engaged'), (END_PARKED, 'Parked'))
-    tele_score_field_choices = ((GRID_LOW, 'Low'), (GRID_MID, 'Mid'), (GRID_HIGH, 'High'))
-    driver_penalties = ((CLEAN, 'No penalties'), (FEW, 'One or Two penalties'), (MODERATE, 'Multiple penalties'), (SEVERE, 'A lot of penalties'))
-    driver_rating_choices = ((ONE, 'Really Bad'), (TWO, 'Bad'), (THREE, 'Average'), (FOUR, 'Good'), (FIVE, 'Great'))
+    driver_penalties = ((CLEAN, 'None'), (ONE, 'One'), (TWO, 'Two'), (SEVERE, 'Three +'))
 
     # Foreign relationship to associate a given match to a specific team
     frc_team = models.ForeignKey(Team, related_name='matches', null=True , on_delete=models.CASCADE)
@@ -123,24 +102,15 @@ class MatchResult(models.Model):
     auto_charge_station = models.CharField(choices=auto_cs_field_choices, default=AUTO_CS_NONE, max_length=13)
 
     # Teleop Scoring options
-    tele_cones_low = models.IntegerField(default=0)
-    tele_cubes_low = models.IntegerField(default=0)
-    tele_cones_mid = models.IntegerField(default=0)
-    tele_cubes_mid = models.IntegerField(default=0)
-    tele_cones_high = models.IntegerField(default=0)
-    tele_cubes_high = models.IntegerField(default=0)
+    tele_low = models.IntegerField(default=0)
+    tele_mid = models.IntegerField(default=0)
+    tele_high = models.IntegerField(default=0)
 
     # Endgame Scoring options
     end_scoring = models.CharField(choices=endgame_cs_field_choices, default=END_NONE, max_length=15)
 
-    # Disabled
-    robot_disabled = models.BooleanField(default=False)
-
     # Penalties
     penalties = models.CharField(choices=driver_penalties, default=CLEAN, max_length=20)
-
-    # Driver skill rating (1 - 5)
-    driver_rating = models.CharField(choices=driver_rating_choices, default=ONE, max_length=13)
 
     # Comments
     comments = models.CharField(default=' ', max_length=255, help_text='(optional)', blank=True)
@@ -159,13 +129,13 @@ class TeamEfficiency(models.Model):
     auto_pieces = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
     auto_charging = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
     auto_mobility = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
+    auto_cs_success = models.DecimalField(max_digits=5, decimal_places=2, default=0.0) 
     teleop_low = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
     teleop_mid = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
     teleop_high = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
-    engage_attempts = models.IntegerField(default=0)
+    teleop_engage_success = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
     endgame_points = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
     total_points = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
-    driver_rating = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
     penalty_rating = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
     
     

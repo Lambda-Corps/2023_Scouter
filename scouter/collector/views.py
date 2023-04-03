@@ -81,17 +81,10 @@ def update_efficiency_numbers():
         # pdb.set_trace()
         num_matches = matches.count()
 
-        ONE = 'Really Bad'
-        TWO = 'Bad'
-        THREE = 'Moderate'
-        FOUR = 'Good'
-        FIVE = 'Really Good'
-        driver_rating_choices = ((ONE, 'Really Bad'), (TWO, 'Bad'), (THREE, 'Average'), (FOUR, 'Good'), (FIVE, 'Great'))
-
-        CLEAN = 'No penalties'
-        FEW = 'One or Two penalties'
-        MODERATE = 'Multiple Penalties'
-        SEVERE = 'A lot of penalties'
+        CLEAN = 'None'
+        ONE = 'One'
+        TWO = 'Two'
+        SEVERE = 'Three +'
 
         # If there's no match data, just save an empty efficiency
         if num_matches == 0:
@@ -101,12 +94,14 @@ def update_efficiency_numbers():
             auto_pieces_total = 0.0
             auto_charging_total = 0.0
             auto_mobility_total = 0.0
+            auto_cs_attempts = 0
+            auto_cs_success = 0
             teleop_low_total = 0.0
             teleop_mid_total = 0.0
             teleop_high_total = 0.0
-            engage_attempts_total = 0.0
+            engage_attempts = 0
+            engage_success = 0
             endgame_points_total = 0.0
-            driver_rating_total = 0.0
             penalty_total = 0.0
 
             for match in matches:
@@ -115,55 +110,46 @@ def update_efficiency_numbers():
                 auto_pieces_total += match.auto_low * 3
                 auto_pieces_total += match.auto_mid * 4
                 auto_pieces_total += match.auto_high * 6
-            
+
+                if match.auto_charge_station != 'None':
+                    auto_cs_attempts += 1
+
                 if match.auto_charge_station == 'Engaged':
                     auto_charging_total += 12
+                    auto_cs_success += 1
                 if match.auto_charge_station == 'Docked':
                     auto_charging_total += 8
+                    auto_cs_success += 1
 
-                if match.tele_cones_high > 0:
-                    teleop_high_total += 5 * match.tele_cones_high
+                if match.tele_high > 0:
+                    teleop_high_total += 5 * match.tele_high
 
-                if match.tele_cubes_mid > 0:
-                    teleop_mid_total += 3 * match.tele_cubes_mid
-                if match.tele_cones_mid > 0:
-                    teleop_mid_total += 3 * match.tele_cones_mid
+                if match.tele_mid > 0:
+                    teleop_mid_total += 3 * match.tele_mid
 
-                if match.tele_cubes_low > 0:
-                    teleop_low_total += 2 * match.tele_cubes_low
-                if match.tele_cones_high > 0:
-                    teleop_low_total += 2 * match.tele_cones_low
+                if match.tele_low > 0:
+                    teleop_low_total += 2 * match.tele_low
 
                 if match.end_scoring == 'Parked':
                     endgame_points_total += 2
-                    engage_attempts_total += 1
                 if match.end_scoring == 'Docked':
                     endgame_points_total += 6
-                    engage_attempts_total += 1
+                    engage_attempts += 1
                 if match.end_scoring == 'Engaged':
                     endgame_points_total += 10
-                    engage_attempts_total += 1
+                    engage_attempts += 1
+                    engage_success += 1
                 if match.end_scoring == 'Failed':
-                    engage_attempts_total += 1
-                if match.driver_rating == ONE:
-                    driver_rating_total += 1
-                if match.driver_rating == TWO:
-                    driver_rating_total += 2
-                if match.driver_rating == THREE:
-                    driver_rating_total += 3
-                if match.driver_rating == FOUR:
-                    driver_rating_total += 4
-                if match.driver_rating == FIVE:
-                    driver_rating_total += 5
+                    engage_attempts += 1
+               
+                if match.penalties == ONE:
+                    penalty_total += 1
 
-                if match.penalties == FEW:
-                    penalty_total += 1.5
-
-                if match.penalties == MODERATE:
-                    penalty_total += 3
+                if match.penalties == TWO:
+                    penalty_total += 2
 
                 if match.penalties == SEVERE:
-                    penalty_total += 4
+                    penalty_total += 3
                 
 
             # Average the totals across their matches
@@ -171,13 +157,13 @@ def update_efficiency_numbers():
             team_eff.auto_pieces = auto_pieces_total / num_matches
             team_eff.auto_charging = auto_charging_total / num_matches
             team_eff.auto_mobility = auto_mobility_total / num_matches
+            team_eff.auto_cs_success = auto_cs_success / auto_cs_attempts
             team_eff.teleop_low = teleop_low_total / num_matches
             team_eff.teleop_mid = teleop_mid_total / num_matches
             team_eff.teleop_high = teleop_high_total / num_matches
-            team_eff.engage_attempts = engage_attempts_total
+            team_eff.teleop_engage_success = engage_success / engage_attempts
             team_eff.endgame_points = endgame_points_total / num_matches
             team_eff.total_points = (endgame_points_total + teleop_high_total + teleop_low_total + teleop_mid_total + auto_pieces_total + auto_charging_total + auto_mobility_total + endgame_points_total) / num_matches
-            team_eff.driver_rating = driver_rating_total / num_matches
             team_eff.penalty_rating = penalty_total / num_matches
 
             team_eff.save()
@@ -193,60 +179,60 @@ def efficiency(request):
     return render(request, 'collector/efficiency.html', {'efficiency': efficiency})
 
 
-def qualifier_predictor(request, number):
-    match = utils.get_qualifier_match(number)
+# def qualifier_predictor(request, number):
+#     match = utils.get_qualifier_match(number)
 
-    if match == None:
-        return HttpResponse(f"No information found for match: {number}") 
+#     if match == None:
+#         return HttpResponse(f"No information found for match: {number}") 
 
-    # We the match
-    teams = {}
-    match_score = {'auto_points': '2', 'teleop_points': '10', 'endgame_points': '15'}
+#     # We the match
+#     teams = {}
+#     match_score = {'auto_points': '2', 'teleop_points': '10', 'endgame_points': '15'}
 
-    team1 = {'number' : match['alliances']['red']['team_keys'][0],
-             'auto_points' : match_score['auto_points'],
-             'teleop_points' : match_score['teleop_points'],
-             'endgame_points' : match_score['endgame_points']
-    }
-    team2 = {'number' : match['alliances']['red']['team_keys'][1],
-             'auto_points' : match_score['auto_points'],
-             'teleop_points' : match_score['teleop_points'],
-             'endgame_points' : match_score['endgame_points']
+#     team1 = {'number' : match['alliances']['red']['team_keys'][0],
+#              'auto_points' : match_score['auto_points'],
+#              'teleop_points' : match_score['teleop_points'],
+#              'endgame_points' : match_score['endgame_points']
+#     }
+#     team2 = {'number' : match['alliances']['red']['team_keys'][1],
+#              'auto_points' : match_score['auto_points'],
+#              'teleop_points' : match_score['teleop_points'],
+#              'endgame_points' : match_score['endgame_points']
 
-    }
-    team3 = {'number' : match['alliances']['red']['team_keys'][2],
-             'auto_points' : match_score['auto_points'],
-             'teleop_points' : match_score['teleop_points'],
-             'endgame_points' : match_score['endgame_points']
+#     }
+#     team3 = {'number' : match['alliances']['red']['team_keys'][2],
+#              'auto_points' : match_score['auto_points'],
+#              'teleop_points' : match_score['teleop_points'],
+#              'endgame_points' : match_score['endgame_points']
 
-    }
-    team4 = {'number' : match['alliances']['red']['team_keys'][0],
-             'auto_points' : match_score['auto_points'],
-             'teleop_points' : match_score['teleop_points'],
-             'endgame_points' : match_score['endgame_points']
+#     }
+#     team4 = {'number' : match['alliances']['red']['team_keys'][0],
+#              'auto_points' : match_score['auto_points'],
+#              'teleop_points' : match_score['teleop_points'],
+#              'endgame_points' : match_score['endgame_points']
 
-    }
-    team5 = {'number' : match['alliances']['red']['team_keys'][1],
-             'auto_points' : match_score['auto_points'],
-             'teleop_points' : match_score['teleop_points'],
-             'endgame_points' : match_score['endgame_points']
+#     }
+#     team5 = {'number' : match['alliances']['red']['team_keys'][1],
+#              'auto_points' : match_score['auto_points'],
+#              'teleop_points' : match_score['teleop_points'],
+#              'endgame_points' : match_score['endgame_points']
 
-    }
-    team6 = {'number' : match['alliances']['red']['team_keys'][2],
-             'auto_points' : match_score['auto_points'],
-             'teleop_points' : match_score['teleop_points'],
-             'endgame_points' : match_score['endgame_points']
+#     }
+#     team6 = {'number' : match['alliances']['red']['team_keys'][2],
+#              'auto_points' : match_score['auto_points'],
+#              'teleop_points' : match_score['teleop_points'],
+#              'endgame_points' : match_score['endgame_points']
 
-    }
+#     }
  
-    teams['r1'] = team1
-    teams['r2'] = team2
-    teams['r3'] = team3
-    teams['b1'] = team4
-    teams['b2'] = team5
-    teams['b3'] = team6
+#     teams['r1'] = team1
+#     teams['r2'] = team2
+#     teams['r3'] = team3
+#     teams['b1'] = team4
+#     teams['b2'] = team5
+#     teams['b3'] = team6
 
-    return render(request, 'scout/predictor_table.html', {'teams': teams})
+#     return render(request, 'scout/predictor_table.html', {'teams': teams})
 
 
 def match_preview(request, type, number):
