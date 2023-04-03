@@ -15,29 +15,37 @@
         <th></th>
         <td>Team Number</td>
         <td>Total Auto Points</td>
+        <td>Auto Success %</td>
         <td>Teleop Points</td>
         <td>Endgame Points</td>
+        <td>Endgame CS %</td>
     </tr>
     <tr id="scoring_row">
         <th style="color: red;">Red 1</th>
         <td>{{ teams.r1.number }}</td>
         <td>{{ teams.r1.auto_points }}</td>
+        <td>{{ teams.r1.auto_success }}</td>
         <td>{{ teams.r1.teleop_points }}</td>
         <td>{{ teams.r1.endgame_points }}</td>
+        <td>{{ teams.r1.endgame_success }}</td>
     </tr>
     <tr id="scoring_row">
         <th style="color: red;">Red 2</th>
         <td>{{ teams.r2.number }}</td>
         <td>{{ teams.r2.auto_points }}</td>
+        <td>{{ teams.r2.auto_success }}</td>
         <td>{{ teams.r2.teleop_points }}</td>
         <td>{{ teams.r2.endgame_points }}</td>
+        <td>{{ teams.r2.endgame_success }}</td>
     </tr>
     <tr id="scoring_row">
         <th style="color: red;">Red 3</th>
         <td>{{ teams.r3.number }}</td>
         <td>{{ teams.r3.auto_points }}</td>
+        <td>{{ teams.r3.auto_success }}</td>
         <td>{{ teams.r3.teleop_points }}</td>
         <td>{{ teams.r3.endgame_points }}</td>
+        <td>{{ teams.r3.endgame_success }}</td>
     </tr>
     <tr id="blue_al">
         <th colspan="5" style="text-align: center; outline-style: solid; outline-width: 3px; outline-color: black;">Blue Alliance</th>
@@ -46,29 +54,37 @@
         <th></th>
         <td>Team Number</td>
         <td>Total Auto Points</td>
+        <td>Auto Success %</td>
         <td>Teleop Points</td>
         <td>Endgame Points</td>
+        <td>Endgame CS %</td>
     </tr>
     <tr id="scoring_row">
         <th style="color: blue;">Blue 1</th>
         <td>{{ teams.b1.number }}</td>
         <td>{{ teams.b1.auto_points }}</td>
+        <td>{{ teams.b1.auto_success }}</td>
         <td>{{ teams.b1.teleop_points }}</td>
         <td>{{ teams.b1.endgame_points }}</td>
+        <td>{{ teams.b1.endgame_success }}</td>
     </tr>
     <tr id="scoring_row">
         <th style="color: blue;">Blue 2</th>
         <td>{{ teams.b2.number }}</td>
         <td>{{ teams.b2.auto_points }}</td>
+        <td>{{ teams.b2.auto_success }}</td>
         <td>{{ teams.b2.teleop_points }}</td>
         <td>{{ teams.b2.endgame_points }}</td>
+        <td>{{ teams.b2.endgame_success }}</td>
     </tr>
     <tr id="scoring_row">
         <th style="color: blue;">Blue 3</th>
         <td>{{ teams.b3.number }}</td>
         <td>{{ teams.b3.auto_points }}</td>
+        <td>{{ teams.b3.auto_success }}</td>
         <td>{{ teams.b3.teleop_points }}</td>
         <td>{{ teams.b3.endgame_points }}</td>
+        <td>{{ teams.b3.endgame_success }}</td>
     </tr>
 </table>
 {% endblock %}

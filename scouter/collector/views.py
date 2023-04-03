@@ -121,14 +121,10 @@ def update_efficiency_numbers():
                     auto_charging_total += 8
                     auto_cs_success += 1
 
-                if match.tele_high > 0:
-                    teleop_high_total += 5 * match.tele_high
 
-                if match.tele_mid > 0:
-                    teleop_mid_total += 3 * match.tele_mid
-
-                if match.tele_low > 0:
-                    teleop_low_total += 2 * match.tele_low
+                teleop_high_total += 5 * match.tele_high
+                teleop_mid_total += 3 * match.tele_mid
+                teleop_low_total += 2 * match.tele_low
 
                 if match.end_scoring == 'Parked':
                     endgame_points_total += 2
