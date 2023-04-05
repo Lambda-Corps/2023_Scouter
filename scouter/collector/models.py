@@ -78,7 +78,7 @@ class MatchResult(models.Model):
     END_PARKED = 'Parked'
     END_DOCKED = 'Docked'
     END_ENGAGED = 'Engaged'
-    END_FAILED = 'Endgame Failed'
+    END_FAILED = 'Failed'
     END_NONE = 'None'
 
     CLEAN = 'None'

@@ -143,14 +143,16 @@ def get_scoring_prediction(team_number, match_count):
                 endgame_points_total += 10
                 engage_attempts += 1
                 engage_success += 1
-            if match.end_scoring == 'Failed':
+            if match.end_scoring == 'Endgame Failed':
                 engage_attempts += 1
+            if match.end_scoring == 'None':
+                engage_attempts += 0
 
         auto_points = round(auto_point_total/match_count, 2)
-        auto_cs_success = round(auto_cs_success / auto_cs_attempts, 2)
+        auto_cs_success = "0 %" if auto_cs_attempts == 0 else f"{round(auto_cs_success / auto_cs_attempts, 3)*100}%"
         tele_points = round(tele_point_total/match_count, 2)
         endgame_points = round(endgame_points_total / match_count, 2)
-        endgame_success = round(engage_success / engage_attempts, 2)
+        endgame_success = "0 %" if engage_attempts == 0 else f"{round(engage_success / engage_attempts, 2)*100}%"
 
         return {'number': team.number, 'auto_points': auto_points, 'auto_success': auto_cs_success, 'teleop_points': tele_points, 'endgame_points': endgame_points, 'charge_station_success': endgame_success}
 
