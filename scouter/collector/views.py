@@ -153,11 +153,11 @@ def update_efficiency_numbers():
             team_eff.auto_pieces = auto_pieces_total / num_matches
             team_eff.auto_charging = auto_charging_total / num_matches
             team_eff.auto_mobility = auto_mobility_total / num_matches
-            team_eff.auto_cs_success = auto_cs_success / auto_cs_attempts
+            team_eff.auto_cs_success = 0.0 if auto_cs_attempts == 0 else auto_cs_success / auto_cs_attempts
             team_eff.teleop_low = teleop_low_total / num_matches
             team_eff.teleop_mid = teleop_mid_total / num_matches
             team_eff.teleop_high = teleop_high_total / num_matches
-            team_eff.teleop_engage_success = engage_success / engage_attempts
+            team_eff.teleop_engage_success = 0.0 if engage_attempts == 0 else engage_success / engage_attempts
             team_eff.endgame_points = endgame_points_total / num_matches
             team_eff.total_points = (endgame_points_total + teleop_high_total + teleop_low_total + teleop_mid_total + auto_pieces_total + auto_charging_total + auto_mobility_total + endgame_points_total) / num_matches
             team_eff.penalty_rating = penalty_total / num_matches

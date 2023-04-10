@@ -9,7 +9,7 @@
 {% block content %}
 <table id="robot_rep">
     <tr id="red_al">
-        <th colspan="5" style="text-align: center; outline-style: solid; outline-width: 3px; outline-color: black;">Red Alliance</th>
+        <th colspan="7" style="text-align: center; outline-style: solid; outline-width: 3px; outline-color: black;">Red Alliance</th>
     </tr>
     <tr id="scoring_header_row">
         <th></th>
@@ -27,7 +27,7 @@
         <td>{{ teams.r1.auto_success }}</td>
         <td>{{ teams.r1.teleop_points }}</td>
         <td>{{ teams.r1.endgame_points }}</td>
-        <td>{{ teams.r1.endgame_success }}</td>
+        <td>{{ teams.r1.charge_station_success }}</td>
     </tr>
     <tr id="scoring_row">
         <th style="color: red;">Red 2</th>
@@ -36,7 +36,7 @@
         <td>{{ teams.r2.auto_success }}</td>
         <td>{{ teams.r2.teleop_points }}</td>
         <td>{{ teams.r2.endgame_points }}</td>
-        <td>{{ teams.r2.endgame_success }}</td>
+        <td>{{ teams.r2.charge_station_success }}</td>
     </tr>
     <tr id="scoring_row">
         <th style="color: red;">Red 3</th>
@@ -45,10 +45,10 @@
         <td>{{ teams.r3.auto_success }}</td>
         <td>{{ teams.r3.teleop_points }}</td>
         <td>{{ teams.r3.endgame_points }}</td>
-        <td>{{ teams.r3.endgame_success }}</td>
+        <td>{{ teams.r3.charge_station_success }}</td>
     </tr>
     <tr id="blue_al">
-        <th colspan="5" style="text-align: center; outline-style: solid; outline-width: 3px; outline-color: black;">Blue Alliance</th>
+        <th colspan="7" style="text-align: center; outline-style: solid; outline-width: 3px; outline-color: black;">Blue Alliance</th>
     </tr>
     <tr id="scoring_header_row">
         <th></th>
@@ -66,7 +66,7 @@
         <td>{{ teams.b1.auto_success }}</td>
         <td>{{ teams.b1.teleop_points }}</td>
         <td>{{ teams.b1.endgame_points }}</td>
-        <td>{{ teams.b1.endgame_success }}</td>
+        <td>{{ teams.b1.charge_station_success }}</td>
     </tr>
     <tr id="scoring_row">
         <th style="color: blue;">Blue 2</th>
@@ -75,7 +75,7 @@
         <td>{{ teams.b2.auto_success }}</td>
         <td>{{ teams.b2.teleop_points }}</td>
         <td>{{ teams.b2.endgame_points }}</td>
-        <td>{{ teams.b2.endgame_success }}</td>
+        <td>{{ teams.b2.charge_station_success }}</td>
     </tr>
     <tr id="scoring_row">
         <th style="color: blue;">Blue 3</th>
@@ -84,7 +84,7 @@
         <td>{{ teams.b3.auto_success }}</td>
         <td>{{ teams.b3.teleop_points }}</td>
         <td>{{ teams.b3.endgame_points }}</td>
-        <td>{{ teams.b3.endgame_success }}</td>
+        <td>{{ teams.b3.charge_station_success }}</td>
     </tr>
 </table>
 {% endblock %}
